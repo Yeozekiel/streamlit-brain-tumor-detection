@@ -46,8 +46,12 @@ def load_model_classification():
         vgg16_model_id = "1NGR8cIFuHT8Za1tJR1wQjNn_ZFLEDB3H"
         vgg16_model_path = "vgg16_model_g.h5"
         if not os.path.exists(vgg16_model_path):
-            gdown.download('https://drive.google.com/uc?id=' + vgg16_model_id, vgg16_model_path, quiet=False)
-        vgg16_model = tf.keras.models.load_model('vgg16_model_g.h5')
+            try:
+                gdown.download('https://drive.google.com/uc?id=' + vgg16_model_id, vgg16_model_path, quiet=False)
+            except Exception as e:
+                st.error(f'Error downloading model with gdown: {e}')
+                return None
+        vgg16_model = tf.keras.models.load_model(vgg16_model_path)
         return vgg16_model
     except:
         raise Exception("Error: Failed to load the VGG16 model")
@@ -60,8 +64,12 @@ def load_model_segmentation():
         unet_model_id = "1aoabD5njPZOfslOAkm1o-7WfUkrQ4xxw"
         unet_model_path = "unet_model_g.h5"
         if not os.path.exists(unet_model_path):
-            gdown.download('https://drive.google.com/uc?id=' + unet_model_id, unet_model_path, quiet=False)
-        unet_model = tf.keras.models.load_model('unet_model_g.h5', custom_objects={'dice_coef': dice_coef})
+            try:
+                gdown.download('https://drive.google.com/uc?id=' + unet_model_id, unet_model_path, quiet=False)
+            except Exception as e:
+                st.error(f'Error downloading model with gdown: {e}')
+                return None
+        unet_model = tf.keras.models.load_model(unet_model_path, custom_objects={'dice_coef': dice_coef})
         return unet_model
     except:
         raise Exception("Error: Failed to load the U-Net model")
