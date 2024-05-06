@@ -4,4 +4,3 @@ opencv-python==4.9.0.80
 matplotlib==3.7.5
 keras==2.15.0
 gdown==4.7.3
-libgl1-mesa-glx
