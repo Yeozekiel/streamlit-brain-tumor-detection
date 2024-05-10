@@ -7,6 +7,7 @@ import gdown
 
 # Import functions from the other files
 from classification import predict_class
+from reque import download_file_from_google_drive
 from segmentation import preprocess_image, predict_segment, dice_coef
 
 # hide deprication warnings which directly don't affect the working of the application
@@ -26,7 +27,7 @@ page_bg_img = '''
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 [data-testid="stAppViewContainer"] {
-background: black ;
+background: #444444;
 background-size: cover;
 opacity: 1;
 }
@@ -48,6 +49,7 @@ def load_model_classification():
         if not os.path.exists(vgg16_model_path):
             try:
                 gdown.download('https://drive.google.com/uc?id=' + vgg16_model_id, vgg16_model_path, quiet=False)
+                # download_file_from_google_drive(vgg16_model_id, vgg16_model_path)
             except Exception as e:
                 st.error(f'Error downloading model with gdown: {e}')
                 return None
@@ -66,6 +68,7 @@ def load_model_segmentation():
         if not os.path.exists(unet_model_path):
             try:
                 gdown.download('https://drive.google.com/uc?id=' + unet_model_id, unet_model_path, quiet=False)
+                # download_file_from_google_drive(unet_model_id, unet_model_path)
             except Exception as e:
                 st.error(f'Error downloading model with gdown: {e}')
                 return None
@@ -91,19 +94,14 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
     # Classificationgs
     with st.spinner(text="Classifying the image..."):
         
-        # Define the classes
-        TUMOR_CLASS = ['meningioma', 'glioma', 'pituitary', 'notumor']
-
-        # Predict the class of the tumor
+        # Predict if tumor
         tumor_class = predict_class(decoded_img, vgg16_model)
 
-    if tumor_class == 3:
+    if tumor_class == 1:
         st.balloons()
         st.success("No tumor detected, Stay Healthy!")
 
     else:
-        st.error(f"Tumor detected, Type: {TUMOR_CLASS[tumor_class]}")
-        
         # Segmentationgs
         with st.spinner(text="Preprocessing the image..."):
 
@@ -125,6 +123,19 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
 
             # Predict the segmentation mask 
             segment = predict_segment(expanded, unet_model)
+
+            # Post-processing: count the number of 1s in the segmentation mask
+            tumor_area = np.count_nonzero(segment == 1)
+
+            # Define a threshold for the minimum tumor area
+            TUMOR_AREA_THRESHOLD = 200  # adjust this value based on your data
+
+            if tumor_area < TUMOR_AREA_THRESHOLD:
+                st.balloons()
+                st.success("No tumor detected, Stay Healthy!")
+                segment = np.zeros_like(segment)
+            else:
+                st.error(f"Tumor detected")
 
             # Convert the segmentation mask to 0-255 scale for visualization
             segment = segment * 255
