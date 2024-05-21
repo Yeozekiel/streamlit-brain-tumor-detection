@@ -7,7 +7,6 @@ import gdown
 
 # Import functions from the other files
 from classification import predict_class
-from reque import download_file_from_google_drive
 from segmentation import preprocess_image, predict_segment, dice_coef
 
 # hide deprication warnings which directly don't affect the working of the application
