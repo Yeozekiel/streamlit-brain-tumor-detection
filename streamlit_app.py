@@ -150,9 +150,9 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
             else:
                 st.error(f"Tumor Detected!")
                 if tumor_class == 0: 
-                    st.error("Glioma Tumor Detected!")
-                if tumor_class == 1:
                     st.error("Meningioma Tumor Detected!")
+                if tumor_class == 1:
+                    st.error("Glioma Tumor Detected!")
                 if tumor_class == 2:
                     st.error("Pituitary Tumor Detected!")
 
