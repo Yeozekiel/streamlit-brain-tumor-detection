@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore")
 
 # set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
-    page_title="Brain Tumor Segmentation",
+    page_title="Brain Tumor Detection",
     page_icon = ":brain:",
     layout = 'wide',
     initial_sidebar_state = 'expanded'
@@ -43,11 +43,11 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 def load_model_classification():
     '''Load the model for classification'''
     try:
-        vgg16_model_id = "1NGR8cIFuHT8Za1tJR1wQjNn_ZFLEDB3H"
+        vgg16_model_id = "1omE-6IU59S79Y08AxPRO6eoBCcjPZPRH" #ResNet50 -> Demo
         vgg16_model_path = "vgg16_model_g.h5"
         if not os.path.exists(vgg16_model_path):
             try:
-                gdown.download('https://drive.google.com/uc?id=' + vgg16_model_id, vgg16_model_path, quiet=False)
+                gdown.download('https://drive.google.com/uc?id=' + vgg16_model_id, vgg16_model_path, quiet=False) 
                 # download_file_from_google_drive(vgg16_model_id, vgg16_model_path)
             except Exception as e:
                 st.error(f'Error downloading model with gdown: {e}')
@@ -96,12 +96,24 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
         # Predict if tumor
         tumor_class = predict_class(decoded_img, vgg16_model)
 
+    if tumor_class == 0:
+        st.balloons()
+        st.success("Glioma Tumor Detected!")
+
     if tumor_class == 1:
         st.balloons()
-        st.success("No tumor detected, Stay Healthy!")
+        st.success("Meningioma Tumor Detected!")
+
+    if tumor_class == 2:
+        st.balloons()
+        st.success("No Tumor Detected, Stay Healthy!")
+
+    if tumor_class == 3:
+        st.balloons()
+        st.success("Pituitary Tumor Detected!")
 
     else:
-        # Segmentationgs
+        # Segmentation
         with st.spinner(text="Preprocessing the image..."):
 
             # Read the image into a numpy array
@@ -131,10 +143,10 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
 
             if tumor_area < TUMOR_AREA_THRESHOLD:
                 st.balloons()
-                st.success("No tumor detected, Stay Healthy!")
+                st.success("No Tumor Detected, Stay Healthy!")
                 segment = np.zeros_like(segment)
             else:
-                st.error(f"Tumor detected")
+                st.error(f"Tumor Detected!")
 
             # Convert the segmentation mask to 0-255 scale for visualization
             segment = segment * 255
@@ -146,7 +158,7 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
 def main():
     # load the models
     # note: model diambil dari URL Google drive karena ukuran file yang besar
-    st.title("Brain Tumor Segmentation")
+    st.title("Brain Tumor Detection")
 
     with st.spinner('Downloading VGG16 Model...'):
         vgg16_model = load_model_classification()
