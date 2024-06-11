@@ -1,5 +1,6 @@
 numpy
 # tensorflow==2.15.0
+tensorflow
 opencv-python-headless==4.9.0.80
 matplotlib==3.7.5
 keras==3.2.1
