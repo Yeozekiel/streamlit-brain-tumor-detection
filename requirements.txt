@@ -3,6 +3,7 @@ numpy
 tensorflow
 opencv-python-headless==4.9.0.80
 matplotlib==3.7.5
-keras==3.2.1
+# keras==3.2.1
+keras
 gdown==4.7.3
 streamlit
