@@ -141,7 +141,7 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
             tumor_area = np.count_nonzero(segment == 1)
 
             # Define a threshold for the minimum tumor area
-            TUMOR_AREA_THRESHOLD = 200  # adjust this value based on your data
+            TUMOR_AREA_THRESHOLD = 50  # adjust this value based on your data
 
             if tumor_area < TUMOR_AREA_THRESHOLD:
                 st.balloons()
