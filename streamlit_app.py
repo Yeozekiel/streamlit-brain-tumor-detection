@@ -100,13 +100,13 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
     if tumor_class == 0:
         st.success("Meningioma Tumor Detected!")
 
-    if tumor_class == 1:
+    elif tumor_class == 1:
         st.success("Glioma Tumor Detected!")
 
-    if tumor_class == 2:
+    elif tumor_class == 2:
         st.success("Pituitary Tumor Detected!")
 
-    if tumor_class == 3:
+    elif tumor_class == 3:
         st.balloons()
         st.success("No Tumor Detected, Stay Healthy!")
         
