@@ -43,7 +43,7 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 def load_model_classification():
     '''Load the model for classification'''
     try:
-        vgg16_model_id = "1omE-6IU59S79Y08AxPRO6eoBCcjPZPRH" #ResNet50 -> Demo
+        vgg16_model_id = "1bqj2_Uo2wm0QaBD030obmxFh_rA0p4de" #VGG16 -> Demo
         vgg16_model_path = "vgg16_model_g.h5"
         if not os.path.exists(vgg16_model_path):
             try:
@@ -96,21 +96,33 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
         # Predict if tumor
         tumor_class = predict_class(decoded_img, vgg16_model)
 
+    # VGG16 Based
     if tumor_class == 0:
-        st.balloons()
-        st.success("Glioma Tumor Detected!")
-
-    if tumor_class == 1:
-        st.balloons()
         st.success("Meningioma Tumor Detected!")
 
+    if tumor_class == 1:
+        st.success("Glioma Tumor Detected!")
+
     if tumor_class == 2:
-        st.balloons()
-        st.success("No Tumor Detected, Stay Healthy!")
+        st.success("Pituitary Tumor Detected!")
 
     if tumor_class == 3:
         st.balloons()
-        st.success("Pituitary Tumor Detected!")
+        st.success("No Tumor Detected, Stay Healthy!")
+        
+    # ResNet50 Based
+    # if tumor_class == 0: 
+    #     st.success("Glioma Tumor Detected!")
+
+    # if tumor_class == 1:
+    #     st.success("Meningioma Tumor Detected!")
+
+    # if tumor_class == 2:
+    #     st.balloons()
+    #     st.success("No Tumor Detected, Stay Healthy!")
+
+    # if tumor_class == 3:
+    #     st.success("Pituitary Tumor Detected!")
 
     else:
         # Segmentation
