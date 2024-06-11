@@ -43,7 +43,7 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 def load_model_classification():
     '''Load the model for classification'''
     try:
-        vgg16_model_id = "1bqj2_Uo2wm0QaBD030obmxFh_rA0p4de" #VGG16 -> Demo
+        vgg16_model_id = "1umGzzekuHY6fQkGMpQrOfqRcDDM1pO6s" #ResNet50 -> Demo
         vgg16_model_path = "vgg16_model_g.h5"
         if not os.path.exists(vgg16_model_path):
             try:
@@ -96,33 +96,23 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
         # Predict if tumor
         tumor_class = predict_class(decoded_img, vgg16_model)
 
-    # VGG16 Based
-    if tumor_class == 0:
-        st.success("Meningioma Tumor Detected!")
-
-    elif tumor_class == 1:
-        st.success("Glioma Tumor Detected!")
-
-    elif tumor_class == 2:
-        st.success("Pituitary Tumor Detected!")
-
-    elif tumor_class == 3:
-        st.balloons()
-        st.success("No Tumor Detected, Stay Healthy!")
-        
-    # ResNet50 Based
-    # if tumor_class == 0: 
-    #     st.success("Glioma Tumor Detected!")
-
-    # if tumor_class == 1:
+    # # VGG16 Based
+    # if tumor_class == 0:
     #     st.success("Meningioma Tumor Detected!")
 
-    # if tumor_class == 2:
+    # elif tumor_class == 1:
+    #     st.success("Glioma Tumor Detected!")
+
+    # elif tumor_class == 2:
+    #     st.success("Pituitary Tumor Detected!")
+
+    # elif tumor_class == 3:
     #     st.balloons()
     #     st.success("No Tumor Detected, Stay Healthy!")
-
-    # if tumor_class == 3:
-    #     st.success("Pituitary Tumor Detected!")
+        
+    # ResNet50 Based
+    if tumor_class == 2: 
+        st.success("No Tumor Detected, Stay Healthy!")
 
     else:
         # Segmentation
@@ -159,6 +149,12 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
                 segment = np.zeros_like(segment)
             else:
                 st.error(f"Tumor Detected!")
+                if tumor_class == 0: 
+                    st.error("Glioma Tumor Detected!")
+                if tumor_class == 1:
+                    st.error("Meningioma Tumor Detected!")
+                if tumor_class == 3:
+                    st.error("Pituitary Tumor Detected!")
 
             # Convert the segmentation mask to 0-255 scale for visualization
             segment = segment * 255
