@@ -62,7 +62,7 @@ def load_model_classification():
 def load_model_segmentation():
     '''Load the model for segmentation'''
     try:
-        unet_model_id = "1aoabD5njPZOfslOAkm1o-7WfUkrQ4xxw"
+        unet_model_id = "1ZWiGHVRI2mfIVcvllvV8SIkmngmTde1n"
         unet_model_path = "unet_model_g.h5"
         if not os.path.exists(unet_model_path):
             try:
