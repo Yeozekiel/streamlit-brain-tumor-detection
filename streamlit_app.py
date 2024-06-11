@@ -111,7 +111,7 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
     #     st.success("No Tumor Detected, Stay Healthy!")
         
     # ResNet50 Based
-    if tumor_class == 2: 
+    if tumor_class == 3: 
         st.success("No Tumor Detected, Stay Healthy!")
 
     else:
@@ -153,7 +153,7 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
                     st.error("Glioma Tumor Detected!")
                 if tumor_class == 1:
                     st.error("Meningioma Tumor Detected!")
-                if tumor_class == 3:
+                if tumor_class == 2:
                     st.error("Pituitary Tumor Detected!")
 
             # Convert the segmentation mask to 0-255 scale for visualization
