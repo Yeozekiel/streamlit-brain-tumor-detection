@@ -15,7 +15,7 @@ warnings.filterwarnings("ignore")
 
 # set some pre-defined configurations for the page, such as the page title, logo-icon, page loading state (whether the page is loaded automatically or you need to perform some action for loading)
 st.set_page_config(
-    page_title="Brain Tumor Detection",
+    page_title="Brain Tumor Segmentation",
     page_icon = ":brain:",
     layout = 'wide',
     initial_sidebar_state = 'expanded'
@@ -62,8 +62,8 @@ def load_model_classification():
 def load_model_segmentation():
     '''Load the model for segmentation'''
     try:
-        unet_model_id = "1nRGhEMHL_2wW4Zf5k3DCmEDvwjDc1NPR"
-        unet_model_path = "unet_model_g.h5"
+        unet_model_id = "1VojYswvjFFweTO_v_9bEFa7URI1bwK6c"
+        unet_model_path = "unet_model_tag_7b.h5"
         if not os.path.exists(unet_model_path):
             try:
                 gdown.download('https://drive.google.com/uc?id=' + unet_model_id, unet_model_path, quiet=False)
