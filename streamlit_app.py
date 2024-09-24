@@ -63,7 +63,7 @@ def load_model_segmentation():
     '''Load the model for segmentation'''
     try:
         unet_model_id = "1nRGhEMHL_2wW4Zf5k3DCmEDvwjDc1NPR"
-        unet_model_path = "U-Net_Tag_7B.h5"
+        unet_model_path = "U-Net_Tag_7.h5"
         if not os.path.exists(unet_model_path):
             try:
                 gdown.download('https://drive.google.com/uc?id=' + unet_model_id, unet_model_path, quiet=False)
