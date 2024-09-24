@@ -62,8 +62,8 @@ def load_model_classification():
 def load_model_segmentation():
     '''Load the model for segmentation'''
     try:
-        unet_model_id = "1VojYswvjFFweTO_v_9bEFa7URI1bwK6c"
-        unet_model_path = "unet_model_tag_7b.h5"
+        unet_model_id = "1ZWiGHVRI2mfIVcvllvV8SIkmngmTde1n"
+        unet_model_path = "U-Net_Tag_7B.h5"
         if not os.path.exists(unet_model_path):
             try:
                 gdown.download('https://drive.google.com/uc?id=' + unet_model_id, unet_model_path, quiet=False)
@@ -166,7 +166,7 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
 def main():
     # load the models
     # note: model diambil dari URL Google drive karena ukuran file yang besar
-    st.title("Brain Tumor Detection")
+    st.title("Brain Tumor Segmentation")
 
     with st.spinner('Downloading VGG16 Model...'):
         vgg16_model = load_model_classification()
