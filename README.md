@@ -1,1 +1,1 @@
-Brain Tumor Segmentation & Classification
+ATRU-Net for Brain Tumor Segmentation
