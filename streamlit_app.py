@@ -323,12 +323,12 @@ def process_image(uploaded_img, uploaded_mask=None, vgg16_model=None, unet_model
                 tumor_class = predict_class(decoded_img, vgg16_model)
 
             # Display classification result based on the tumor class
-            if tumor_class == 0:
-                st.error("Meningioma Tumor Detected!")
-            elif tumor_class == 1:
-                st.error("Glioma Tumor Detected!")
-            elif tumor_class == 2:
-                st.error("Pituitary Tumor Detected!")
+            #if tumor_class == 0:
+             #   st.error("Meningioma Tumor Detected!")
+            #elif tumor_class == 1:
+             #   st.error("Glioma Tumor Detected!")
+            #elif tumor_class == 2:
+             #   st.error("Pituitary Tumor Detected!")
 
     col1, col2 = st.columns(2)
     col1.image(normalized, caption="Preprocessed Image", width=300)
